@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download YouTube Playlist</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button[type="submit"],
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover,
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #playlistInfo {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f3f3f3;
+        }
+
+        #videoOptions {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #downloadStatus {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            padding: 20px;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #progress {
+            width: 100%;
+            height: 20px;
+            background-color: #f3f3f3;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 5px;
+        }
+
+        #downloadTime {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #loading {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px;
+            margin-left: -25px;
+            z-index: 999;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Download YouTube Playlist</h1>
+        <form id="playlistForm">
+            <label for="playlistUrl">Playlist URL:</label>
+            <input type="text" id="playlistUrl" name="playlistUrl" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="playlistInfo"></div>
+        <div id="videoOptions">
+            <label for="videoQuality">Select video quality:</label>
+            <select id="videoQuality"></select>
+            <label for="videoCount">Select number of videos to download:</label>
+            <input type="number" id="videoCount" value="1" min="1">
+            <button id="downloadVideos">Download</button>
+            <div id="downloadStatus">
+                <div id="progressContainer">
+                    <label for="progress">Download Progress:</label>
+                    <progress id="progress" value="0" max="100"></progress>
+                    <p id="downloadStatusText">Downloading...</p>
+                </div>
+                <div id="timeRemaining"></div>
+            </div>
+        </div>
+        <div id="status"></div>
+        <div id="loading"></div>
+        <p id="downloadTime"></p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
